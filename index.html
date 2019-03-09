@@ -6,21 +6,32 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Giphy Catalog</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    
 </head>
 
 <body>
 
 <aside class="sidenav">
-  <a>About</a>
+  <!-- <a>About</a> -->
 </aside>
 
 <main>
   <h2>Giphy Catalog</h2>
-  <p>Add your own:</p>
+  <form>
+    <label for="user-input">Add your own:</label>
+      <input type="text" id="user-input"><br>
+      <!-- This button will trigger our AJAX call -->
+      <button id="find-giphy">Giphy Search</button> 
+  </form>
   <div class="container">
 
   </div>
 </main>
    
+<script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+<script src="assets/javascript/main.js"></script>
 </body>
 </html> 
