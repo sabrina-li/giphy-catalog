@@ -27,8 +27,28 @@ body {
     cursor: pointer;
   }
   
+
   main {
     margin-left: 200px; /* Same as the width of the sidenav */
+  }
+  h2{
+    font-size: 2rem;
+    height: fit-content;
+    margin-bottom: 1rem;
+  }
+  .container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+  .container img{
+    flex: none 
+  }
+
+  .card{
+    text-align: center;
+    margin-top: 1rem;
   }
   
   @media screen and (max-height: 450px) {

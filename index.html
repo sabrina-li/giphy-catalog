@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Giphy Catalog</title>
+    <link rel="stylesheet" href="assets/css/reset.css">
     <link rel="stylesheet" href="assets/css/style.css">
+
     
 </head>
 
@@ -18,12 +20,12 @@
 <main>
   <h2>Giphy Catalog</h2>
   <form>
-    <label for="user-input">Add your own:</label>
+    <label for="user-input">Add anything you want:</label>
       <input type="text" id="user-input"><br>
       <!-- This button will trigger our AJAX call -->
-      <button id="find-giphy">Giphy Search</button> 
+      <button id="add-item">Add to List</button> 
   </form>
-  <div class="container">
+  <div class="container" id="Catalog">
 
   </div>
 </main>
