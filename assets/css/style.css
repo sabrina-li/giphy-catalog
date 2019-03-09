@@ -40,7 +40,8 @@ body {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: flex-start;
+    align-items:  baseline ;
   }
   .container img{
     flex: none 
@@ -48,7 +49,7 @@ body {
 
   .card{
     text-align: center;
-    margin-top: 1rem;
+    margin: 1rem;
   }
   
   @media screen and (max-height: 450px) {
