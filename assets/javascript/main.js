@@ -36,22 +36,27 @@ $(document).ready(function () {
         arr.forEach(function(gifobj){
 
             let thisGif = $(`<div class="card">
-                                <img src=${gifobj.images.fixed_height.url} alt=${gifobj.title} style="width:100%">
+                                <img src=${gifobj.images.fixed_height_still.url} alt=${gifobj.title} style="width:100%" data-move=${gifobj.images.fixed_height.url}>
                                 <div>
                                 <h4><b>${"Title: "+gifobj.title}</b></h4> 
                                 <p>${"Rating: "+gifobj.rating}</p> 
                                 </div>
                             </div>`);
-
-
-
-
-            console.log(gifobj.images.fixed_width);
+            //gifobj.images.fixed_height.url
+            //gifobj.images.fixed_height_still.url
             thisGif.attr("src",);
             $("#Catalog").append(thisGif);
-        })
+        });
+    }
+
+    function makeMove(){
+        let thisCard = $(this).children(":first-child")[0];
+        const src = $(thisCard).attr("src");
+        $(thisCard).attr("src",$(thisCard).attr("data-move"));
+        $(thisCard).attr("data-move", src);
     }
 
     initSideBar();
     $(document).on("click", ".navItem", loadGiphy);
+    $(document).on("click", ".card", makeMove);
 });
