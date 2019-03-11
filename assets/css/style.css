@@ -1,14 +1,112 @@
 body {
     font-family: "Lato", sans-serif;
+}
 
-  }
+b{
+  font-weight: bold;
+}
 
-  nav span{
-    display: none;
-  }
-  .sidenav {
+nav span{
+  display: none;
+}
+.sidenav {
+  height: 100%;
+  width: 200px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  color: #818181;
+  overflow-x: visible;
+  overflow-y: auto;
+
+  /* position: relative; */
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-bottom:20px;
+}
+.sidenav a {
+  padding: 6px;
+  text-decoration: none;
+  font-size: 23px;
+  display: block;
+}
+.sidenav a:hover {
+  color: #f1f1f1;
+  cursor: pointer;
+}
+.sidenav a.active {
+  color: #f1f1f1;
+  cursor: pointer;
+}
+
+
+main {
+  margin-left: 200px; /* Same as the width of the sidenav */
+  padding: 32px 0 0 32px;
+}
+h2{
+  font-size: 33px;
+  height: fit-content;
+  padding-bottom: 10px;
+}
+
+
+
+input[type=text] {
+  width: 50%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+input[type=submit] {
+  background-color: #111;
+  color: #f1f1f1;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+input[type=submit]:hover {
+  background-color: #444;
+}
+
+.container{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items:  baseline ;
+}
+.container img{
+  flex: none 
+}
+.card{
+  text-align: center;
+  padding: 20px 20px 0 0;
+}
+
+
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+
+@media screen and (max-width: 768px) {
+  nav{
     height: 100%;
-    width: 200px;
+    position: fixed;
+  }
+  .sidenav{
+    height: 100%;
+    width: 150px;
     position: fixed;
     z-index: 1;
     top: 0;
@@ -17,195 +115,147 @@ body {
     color: #818181;
     overflow-x: visible;
     overflow-y: auto;
+    transform: translateX(0);
 
     /* position: relative; */
     padding-top: 20px;
     padding-left: 20px;
     padding-bottom:20px;
+
+    position: absolute;
+    left: 0;
+    width: 150px;
+    height: 100%;
+    padding: 20px 0 0 10px;
+    margin: 0;
   }
   .sidenav a {
     padding: 6px;
     text-decoration: none;
     font-size: 23px;
     display: block;
+    padding: 6px;
+    font-size: 18px;
   }
-  .sidenav a:hover {
-    color: #f1f1f1;
-    cursor: pointer;
-  }
-  .sidenav a.active {
-    color: #f1f1f1;
-    cursor: pointer;
+  main{
+    margin-left: 150px; /* Same as the width of the sidenav */
+    padding: 32px 0 0 20px;
+    height: 100%;
   }
 
+}
+
+@media screen and (max-width: 640px) {
+  nav{
+    height: 100%;
+    position: fixed;
+  }
+  .sidenav{
+    position: absolute;
+    left: 0;
+    width: 150px;
+    height: 100%;
+    padding: 20px 0 0 10px;
+    margin: 0;
+    transform: translateX(-100%);
+  }
+  nav span {
+    position: relative;
+    top:30px;
+    display: initial;
+    color: #818181;
+    font-size: 30px;
+    padding: 10px;
+    z-index: 1;
+    border-radius: 4px;
+    margin: 18px 0 0 18px;
+    /* TODO Hamberger manu js slid out animation */
+  }
+  .sidenav a {
+    padding: 6px;
+    font-size: 22px;
+  }
+
+  .sidenavunhide{
+    height: 100%;
+    width: 150px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    color: #818181;
+    overflow-x: visible;
+    overflow-y: auto;
+    transform: translateX(0);
+
+    /* position: relative; */
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-bottom:20px;
+
+    position: absolute;
+    left: 0;
+    width: 150px;
+    height: 100%;
+    padding: 20px 0 0 10px;
+    margin: 0;
+
+    -webkit-animation-name: pushnav; 
+    /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 1.5s; 
+    /* Safari 4.0 - 8.0 */
+    animation-name: pushnav; 
+    animation-duration:  1.5s;
+  }
+  .sidenavunhide a {
+    padding: 6px;
+    text-decoration: none;
+    font-size: 23px;
+    display: block;
+    padding: 6px;
+    font-size: 18px;
+  }
 
   main {
-    margin-left: 200px; /* Same as the width of the sidenav */
-    padding: 32px 0 0 32px;
-  }
-  h2{
-    font-size: 33px;
-    height: fit-content;
-    padding-bottom: 10px;
+    margin-left: 60px; /* Same as the width of the sidenav */
+    padding: 32px 0 0 20px;
+    height: 100%;
   }
 
-
-  
-  input[type=text] {
-    width: 50%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
-  input[type=submit] {
-    background-color: #111;
-    color: #f1f1f1;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  input[type=submit]:hover {
-    background-color: #444;
+  .unhidemain{
+    margin-left: 100px; /* Same as the width of the sidenav */
+    padding: 32px 0 0 20px;
+    height: 100%;
+    -webkit-animation-name: pushmain; 
+    /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration:  1.5s; 
+    /* Safari 4.0 - 8.0 */
+    animation-name: pushmain; 
+    animation-duration:  1.5s;
   }
   
-  .container{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items:  baseline ;
+}
+
+
+@keyframes pushnav {
+  from {
+      opacity: 0;
+      transform: translate(-100%, 0);
   }
-  .container img{
-    flex: none 
-  }
-  .card{
-    text-align: center;
-    padding: 20px 20px 0 0;
+  to {
+      opacity: 1;
+      transform: translate(0, 0);
   }
 
+}
 
-  
-  @media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 18px;}
+@keyframes pushmain {
+  from {
+    margin-left: 60px;
+  }
+  to {
+    margin-left: 100px;
   }
 
-  @media screen and (max-width: 640px) {
-    nav{
-      height: 100%;
-      position: fixed;
-    }
-    .sidenav{
-      position: absolute;
-      left: 0;
-      width: 150px;
-      height: 100%;
-      padding: 20px 0 0 10px;
-      margin: 0;
-      transform: translateX(-100%);
-    }
-    nav span {
-      position: relative;
-      top:30px;
-      display: initial;
-      color: #818181;
-      font-size: 30px;
-      padding: 10px;
-      z-index: 1;
-      border-radius: 4px;
-      margin: 18px 0 0 18px;
-      /* TODO Hamberger manu js slid out animation */
-    }
-    .sidenav a {
-      padding: 6px;
-      font-size: 22px;
-    }
-
-    .sidenavunhide{
-      height: 100%;
-      width: 150px;
-      position: fixed;
-      z-index: 1;
-      top: 0;
-      left: 0;
-      background-color: #111;
-      color: #818181;
-      overflow-x: visible;
-      overflow-y: auto;
-      transform: translateX(0);
-
-      /* position: relative; */
-      padding-top: 20px;
-      padding-left: 20px;
-      padding-bottom:20px;
-  
-      position: absolute;
-      left: 0;
-      width: 150px;
-      height: 100%;
-      padding: 20px 0 0 10px;
-      margin: 0;
-
-      -webkit-animation-name: pushnav; 
-      /* Safari 4.0 - 8.0 */
-      -webkit-animation-duration: 1.5s; 
-      /* Safari 4.0 - 8.0 */
-      animation-name: pushnav; 
-      animation-duration:  1.5s;
-    }
-    .sidenavunhide a {
-      padding: 6px;
-      text-decoration: none;
-      font-size: 23px;
-      display: block;
-      padding: 6px;
-      font-size: 18px;
-    }
-
-    main {
-      margin-left: 60px; /* Same as the width of the sidenav */
-      padding: 32px 0 0 20px;
-      height: 100%;
-    }
-
-    .unhidemain{
-      margin-left: 100px; /* Same as the width of the sidenav */
-      padding: 32px 0 0 20px;
-      height: 100%;
-      -webkit-animation-name: pushmain; 
-      /* Safari 4.0 - 8.0 */
-      -webkit-animation-duration:  1.5s; 
-      /* Safari 4.0 - 8.0 */
-      animation-name: pushmain; 
-      animation-duration:  1.5s;
-    }
-    
-  }
-
-
-  @keyframes pushnav {
-    from {
-        opacity: 0;
-        transform: translate(-100%, 0);
-    }
-    to {
-        opacity: 1;
-        transform: translate(0, 0);
-    }
-
-  }
-
-  @keyframes pushmain {
-    from {
-      margin-left: 60px;
-    }
-    to {
-      margin-left: 100px;
-    }
-
-  }
+}

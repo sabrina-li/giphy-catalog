@@ -2,7 +2,7 @@ var array = ["running", "cat","dog","asdf","harry potter","cat wearing hat","fri
 const apiKey= "jIGF6tck67zDxSHcihSf1h7wfRbCITyb";
 const baseURL="https://api.giphy.com/v1/gifs/search?api_key=iXVZjM3tIa7nDqSSdJVHp3N6Qg4ZhDXA&rating=PG-13&lang=en&limit=10"
 //&q=cat
-//TODO: &offset=0
+//&offset=0
 
 $(document).ready(function () {
     function initSideBar() {
@@ -30,7 +30,6 @@ $(document).ready(function () {
     });
 
     function loadGiphy(data,scrollOffset=0){
-        // console.log(data);
         let searchstr = $(data).attr("data");
         if(typeof data == "string"){
             searchstr = data;
@@ -53,7 +52,7 @@ $(document).ready(function () {
             let thisGif = $(`<div class="card">
                                 <img src=${gifobj.images.fixed_height_still.url} alt=${gifobj.title} style="width:100%" data-move=${gifobj.images.fixed_height.url}>
                                 <div>
-                                <h4><b>${"Title: "+gifobj.title}</b></h4> 
+                                <h4><b>${"Title: "+gifobj.title.replace(/GIF+$/, "")}</b></h4> 
                                 <p>${"Rating: "+gifobj.rating.toUpperCase()}</p> 
                                 </div>
                             </div>`);
@@ -74,9 +73,9 @@ $(document).ready(function () {
         var scrollHeight = $(document).height();
         var scrollPosition = $(window).height() + $(window).scrollTop();
         if ((scrollHeight - scrollPosition) / scrollHeight === 0) {
-            //TODO set offset for API
+            //at bottom of page
+            //TODO: add botto to go back on top
             let scrollOffset = $("#Catalog").children().length;
-            // console.log(scrollOffset);
             loadGiphy($(".active").text(),scrollOffset);
 	    }
     }
