@@ -1,4 +1,4 @@
-var sports = ["Ski", "Cliff Jumping", "Cat","Dog"];
+var array = ["ski", "cliff jumping", "cat","dog"];
 const apiKey= "jIGF6tck67zDxSHcihSf1h7wfRbCITyb";
 const baseURL="https://api.giphy.com/v1/gifs/search?api_key=iXVZjM3tIa7nDqSSdJVHp3N6Qg4ZhDXA&rating=G&lang=en&limit=10"
 //&q=cat
@@ -7,25 +7,26 @@ const baseURL="https://api.giphy.com/v1/gifs/search?api_key=iXVZjM3tIa7nDqSSdJVH
 $(document).ready(function () {
     function initSideBar() {
         $(".sidenav").empty()
-        sports.forEach(function (val) {
+        array.forEach(function (val) {
             let newItem = $("<a>");
             newItem.addClass("navItem");
             newItem.attr("data", val);
-            newItem.text(val);
+            newItem.text(val.toLowerCase().split(' ')
+                            .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+                            .join(' '));
             $(".sidenav").append(newItem);
         })
     }
     $("#add-item").on("click", function (event) {
         event.preventDefault();
-        // console.log($("#user-input").val());
-        var newSport = $("#user-input").val().trim();
-        //TODO error handling if val is empty
-        newSport = newSport.toLowerCase().split(' ')
-                .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
-                .join(' ');
-        sports.push(newSport);
-        initSideBar();
-        loadGiphy(newSport);
+        input = $("#user-input").val().trim().toLowerCase();
+        if(input!== "" && array.indexOf(input) == -1){
+            //TODO error handling if val is empty
+            array.push(input);
+            initSideBar();
+            loadGiphy(input);
+        }
+        $("#user-input").val("");
     });
 
     function loadGiphy(data){
