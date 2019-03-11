@@ -24,27 +24,27 @@ $(document).ready(function () {
             //TODO error handling if val is empty
             array.push(input);
             initSideBar();
-            loadGiphy(input,false);
+            loadGiphy(input);
         }
         $("#user-input").val("");
     });
 
-    function loadGiphy(data,isScroll){
-        console.log(data);
+    function loadGiphy(data,scrollOffset=0){
+        // console.log(data);
         let searchstr = $(data).attr("data");
         if(typeof data == "string"){
             searchstr = data;
         }
         
         $.ajax({
-            url:baseURL+'&q='+searchstr,
+            url:baseURL+'&q='+searchstr+"&offset="+scrollOffset,
             method:"GET"
         }).then(function(response){
-            showCatalog(response,isScroll);
+            showCatalog(response,scrollOffset);
         })
     }
-    function showCatalog(response,isScroll){
-        if (!isScroll){
+    function showCatalog(response,scrollOffset){
+        if (scrollOffset==0){
             $("#Catalog").empty();
         }
         const arr = response.data;
@@ -75,7 +75,9 @@ $(document).ready(function () {
         var scrollPosition = $(window).height() + $(window).scrollTop();
         if ((scrollHeight - scrollPosition) / scrollHeight === 0) {
             //TODO set offset for API
-            loadGiphy($(".active").text(),true);
+            let scrollOffset = $("#Catalog").children().length;
+            // console.log(scrollOffset);
+            loadGiphy($(".active").text(),scrollOffset);
 	    }
     }
 
@@ -85,7 +87,7 @@ $(document).ready(function () {
         $(this).addClass("active");
         $(".sidenav").removeClass("sidenavunhide");
         $("main").removeClass("unhidemain");
-        loadGiphy(this,false);
+        loadGiphy(this);
     });
     $(document).on("click", ".card", makeMove);
     $(document).on("scroll",function(){
