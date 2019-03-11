@@ -1,6 +1,6 @@
-var array = ["ski", "cliff jumping", "cat","dog"];
+var array = ["running", "cat","dog","asdf","harry potter","cat wearing hat","friday"];
 const apiKey= "jIGF6tck67zDxSHcihSf1h7wfRbCITyb";
-const baseURL="https://api.giphy.com/v1/gifs/search?api_key=iXVZjM3tIa7nDqSSdJVHp3N6Qg4ZhDXA&rating=G&lang=en&limit=10"
+const baseURL="https://api.giphy.com/v1/gifs/search?api_key=iXVZjM3tIa7nDqSSdJVHp3N6Qg4ZhDXA&rating=PG-13&lang=en&limit=10"
 //&q=cat
 //TODO: &offset=0
 
