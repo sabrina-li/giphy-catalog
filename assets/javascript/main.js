@@ -83,11 +83,17 @@ $(document).ready(function () {
     $(document).on("click", ".navItem", function(){
         $(".navItem").removeClass("active");
         $(this).addClass("active");
+        $(".sidenav").removeClass("sidenavunhide");
+        $("main").removeClass("unhidemain");
         loadGiphy(this,false);
     });
     $(document).on("click", ".card", makeMove);
     $(document).on("scroll",function(){
         checkScroll();
     });
-    
+    $(".fas").on("click",function(){
+        $(".sidenav").addClass("sidenavunhide");
+        $("main").addClass("unhidemain");
+        //TODO: add x to exit the nav
+    })
 });
