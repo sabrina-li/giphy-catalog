@@ -20,11 +20,20 @@ $(document).ready(function () {
         // console.log($("#user-input").val());
         var newSport = $("#user-input").val().trim();
         //TODO error handling if val is empty
+        newSport = newSport.toLowerCase().split(' ')
+                .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+                .join(' ');
         sports.push(newSport);
         initSideBar();
+        loadGiphy(newSport);
     });
 
-    function loadGiphy(){
+    function loadGiphy(data){
+        if(typeof data == "string"){
+            console.log(data);
+            $(this).attr("data",data);
+        }
+        console.log($(this).attr("data"));
         $.ajax({
             url:baseURL+'&q='+$(this).attr("data"),
             method:"GET"
@@ -39,7 +48,7 @@ $(document).ready(function () {
                                 <img src=${gifobj.images.fixed_height_still.url} alt=${gifobj.title} style="width:100%" data-move=${gifobj.images.fixed_height.url}>
                                 <div>
                                 <h4><b>${"Title: "+gifobj.title}</b></h4> 
-                                <p>${"Rating: "+gifobj.rating}</p> 
+                                <p>${"Rating: "+gifobj.rating.toUpperCase()}</p> 
                                 </div>
                             </div>`);
             //gifobj.images.fixed_height.url

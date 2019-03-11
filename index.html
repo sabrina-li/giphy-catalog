@@ -5,28 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Giphy Catalog</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/reset.css">
     <link rel="stylesheet" href="assets/css/style.css">
-
-    
 </head>
 
 <body>
 
-<aside class="sidenav">
-  <!-- <a>About</a> -->
-</aside>
+<nav>
+  <span><i class="fas fa-bars"></i></span>
+  <aside class="sidenav">
+    <!-- <a>About</a> -->
+  </aside>
+</nav>
+
 
 <main>
   <h2>Giphy Catalog</h2>
-  <form>
-    <label for="user-input">Add anything you want:</label>
-      <input type="text" id="user-input"><br>
-      <!-- This button will trigger our AJAX call -->
-      <button id="add-item">Add to List</button> 
-  </form>
-  <div class="container" id="Catalog">
+  <div class="formDiv">
+    <form>
+      <label for="user-input">Add anything you want:</label>
+        <input type="text" id="user-input">
+        <!-- This button will trigger our AJAX call -->
+        <input type="submit" value="Add to List" id="add-item"></input> 
+    </form>
+  </div>
 
+  <div class="container" id="Catalog">
   </div>
 </main>
    
