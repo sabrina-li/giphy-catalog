@@ -39,6 +39,7 @@ $(document).ready(function () {
             url:baseURL+'&q='+searchstr+"&offset="+scrollOffset,
             method:"GET"
         }).then(function(response){
+            console.log(baseURL+'&q='+searchstr+"&offset="+scrollOffset);
             showCatalog(response,scrollOffset);
         })
     }
@@ -48,12 +49,15 @@ $(document).ready(function () {
         }
         const arr = response.data;
         arr.forEach(function(gifobj){
-
+            console.log(gifobj.images.fixed_height.url);
             let thisGif = $(`<div class="card">
-                                <img src=${gifobj.images.fixed_height_still.url} alt=${gifobj.title} style="width:100%" data-move=${gifobj.images.fixed_height.url}>
+                                <img class="gifimg" src=${gifobj.images.fixed_height_still.url} alt=${gifobj.title} style="width:100%" data-move=${gifobj.images.fixed_height.url}>
+                                </img>
                                 <div>
-                                <h4><b>${"Title: "+gifobj.title.replace(/GIF+$/, "")}</b></h4> 
-                                <p>${"Rating: "+gifobj.rating.toUpperCase()}</p> 
+                                    <h4><b>Title: ${gifobj.title.replace(/GIF+$/, "")}</b>
+                                        <span>    <i class="fas fa-download" data="${gifobj.images.fixed_height.url}"></i></span>
+                                    </h4> 
+                                    <p>Rating: ${gifobj.rating.toUpperCase()}</p> 
                                 </div>
                             </div>`);
             //gifobj.images.fixed_height.url
@@ -64,10 +68,10 @@ $(document).ready(function () {
     }
 
     function makeMove(){
-        let thisCard = $(this).children(":first-child")[0];
-        const src = $(thisCard).attr("src");
-        $(thisCard).attr("src",$(thisCard).attr("data-move"));
-        $(thisCard).attr("data-move", src);
+        // let thisCard = $(this).children(":first-child")[0];
+        const src = $(this).attr("src");
+        $(this).attr("src",$(this).attr("data-move"));
+        $(this).attr("data-move", src);
     }
     function checkScroll(){
         var scrollHeight = $(document).height();
@@ -87,13 +91,30 @@ $(document).ready(function () {
         $(".sidenav").removeClass("sidenavunhide");
         loadGiphy(this);
     });
-    $(document).on("click", ".card", makeMove);
+    $(document).on("click", ".gifimg", makeMove);
     $(document).on("scroll",function(){
         checkScroll();
     });
-    $(".fas").on("click",function(){
+    $(".fa-bars").on("click",function(){
         $(".sidenav").addClass("sidenavunhide");
         //TODO: add x to exit the nav
     })
     $("main").on("click", function(){$(".sidenav").removeClass("sidenavunhide");});
+
+    $(".fa-download").on("click",function(){
+        downloadLink = $(this).attr("data");
+        $.ajax({
+            url:downloadLink,
+            method:"GET",
+            xhrFields: {
+                responseType: 'blob'
+            }
+        }).then(function(r){
+            var a = document.createElement('a');
+            a.href = window.URL.createObjectURL(r);
+            a.download = '';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        })
+    });
 });
