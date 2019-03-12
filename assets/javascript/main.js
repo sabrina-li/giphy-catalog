@@ -85,7 +85,6 @@ $(document).ready(function () {
         $(".navItem").removeClass("active");
         $(this).addClass("active");
         $(".sidenav").removeClass("sidenavunhide");
-        $("main").removeClass("unhidemain");
         loadGiphy(this);
     });
     $(document).on("click", ".card", makeMove);
@@ -94,7 +93,7 @@ $(document).ready(function () {
     });
     $(".fas").on("click",function(){
         $(".sidenav").addClass("sidenavunhide");
-        $("main").addClass("unhidemain");
         //TODO: add x to exit the nav
     })
+    $("main").on("click", function(){$(".sidenav").removeClass("sidenavunhide");});
 });
