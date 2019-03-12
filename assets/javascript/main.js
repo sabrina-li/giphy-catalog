@@ -96,7 +96,7 @@ $(document).ready(function () {
             var binaryData = [];
             binaryData.push(data);
             var url = window.URL.createObjectURL(new Blob(binaryData, {type: "application/gif"}))
-            
+            //mobile support: https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL
             var a = document.createElement('a');
             a.href = url
             a.download = '';
