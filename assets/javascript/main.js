@@ -51,12 +51,12 @@ $(document).ready(function () {
         arr.forEach(function(gifobj){
             // console.log(gifobj.images.fixed_height.url);
             let thisGif = $(`<div class="card">
-                                <img class="gifimg" src=${gifobj.images.fixed_height_still.url} alt=${gifobj.title} style="width:100%" data-move=${gifobj.images.fixed_height.url}>
-                                </img>
+                                <div class="carddiv">
+                                    <img class="gifimg" src=${gifobj.images.fixed_height_still.url} alt=${gifobj.title} style="width:100%" data-move=${gifobj.images.fixed_height.url}>
+                                    <span><i class="fas fa-download" data="${gifobj.images.fixed_height.url}"></i></span>
+                                </div>
                                 <div>
-                                    <h4><b>Title: ${gifobj.title.replace(/GIF+$/, "")}</b>
-                                        <span>    <i class="fas fa-download" data="${gifobj.images.fixed_height.url}"></i></span>
-                                    </h4> 
+                                    <h4><b>Title: ${gifobj.title.replace(/GIF+$/, "")}</b> </h4> 
                                     <p>Rating: ${gifobj.rating.toUpperCase()}</p> 
                                 </div>
                             </div>`);

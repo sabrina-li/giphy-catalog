@@ -90,7 +90,18 @@ input[type=submit]:hover {
   flex-wrap: wrap-reverse;
 } */
 .container img{
-  flex: none 
+  flex: none;
+}
+.carddiv{
+  position: relative;;
+}
+.carddiv span{
+  font-size: 23px;
+  position: absolute;
+  bottom:0;
+  right: 0;
+  padding: 10px;
+  background-color: white;
 }
 .card{
   text-align: center;
