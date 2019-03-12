@@ -39,7 +39,7 @@ $(document).ready(function () {
             url:baseURL+'&q='+searchstr+"&offset="+scrollOffset,
             method:"GET"
         }).then(function(response){
-            console.log(baseURL+'&q='+searchstr+"&offset="+scrollOffset);
+            // console.log(baseURL+'&q='+searchstr+"&offset="+scrollOffset);
             showCatalog(response,scrollOffset);
         })
     }
@@ -49,7 +49,7 @@ $(document).ready(function () {
         }
         const arr = response.data;
         arr.forEach(function(gifobj){
-            console.log(gifobj.images.fixed_height.url);
+            // console.log(gifobj.images.fixed_height.url);
             let thisGif = $(`<div class="card">
                                 <img class="gifimg" src=${gifobj.images.fixed_height_still.url} alt=${gifobj.title} style="width:100%" data-move=${gifobj.images.fixed_height.url}>
                                 </img>
@@ -83,6 +83,27 @@ $(document).ready(function () {
             loadGiphy($(".active").text(),scrollOffset);
 	    }
     }
+    function downloadLink(){
+        downloadLink = $(this).attr("data");
+        $.ajax({
+            url:downloadLink,
+            method:"GET",
+            xhrFields: {
+                responseType: 'blob'
+            }
+        }).then(function(data){
+            
+            var binaryData = [];
+            binaryData.push(data);
+            var url = window.URL.createObjectURL(new Blob(binaryData, {type: "application/gif"}))
+            
+            var a = document.createElement('a');
+            a.href = url
+            a.download = '';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        })
+    }
 
     initSideBar();
     $(document).on("click", ".navItem", function(){
@@ -101,20 +122,5 @@ $(document).ready(function () {
     })
     $("main").on("click", function(){$(".sidenav").removeClass("sidenavunhide");});
 
-    $(".fa-download").on("click",function(){
-        downloadLink = $(this).attr("data");
-        $.ajax({
-            url:downloadLink,
-            method:"GET",
-            xhrFields: {
-                responseType: 'blob'
-            }
-        }).then(function(r){
-            var a = document.createElement('a');
-            a.href = window.URL.createObjectURL(r);
-            a.download = '';
-            a.click();
-            window.URL.revokeObjectURL(url);
-        })
-    });
+    $(document).on("click",".fa-download",downloadLink);
 });
