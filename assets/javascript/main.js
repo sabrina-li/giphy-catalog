@@ -36,7 +36,8 @@ $(document).ready(function () {
             searchstr = data;
         }else if (searchstr == "favorite"){
             let favarr = localStorage.getItem("fav");
-            console.log(favarr);
+            // console.log(JSON.parse(favarr));
+            showCatalog(JSON.parse(favarr),0);
             return null
         }
         
@@ -48,15 +49,15 @@ $(document).ready(function () {
             showCatalog(response.data,scrollOffset);
         })
     }
-    function showCatalog(data,scrollOffset){
+    function showCatalog(arr,scrollOffset){
         if (scrollOffset==0){
             $("#Catalog").empty();
         }
-        const arr = data;
+        
         arr.forEach(function(gifobj){
             // console.log(gifobj.images.fixed_height.url);
             let thisGif = $(`<div class="card">
-                                <div class="carddiv" data-move="${gifobj.images.fixed_height.url}" data-still="${gifobj.images.fixed_height_still.url}" data-state="still">
+                                <div class="carddiv" data-move="${gifobj.images.fixed_height.url}" data-still="${gifobj.images.fixed_height_still.url}" data-state="still" data-title="${gifobj.title}" data-rating="${gifobj.rating}">
                                     <img class="gifimg" src="${gifobj.images.fixed_height_still.url}" alt="${gifobj.title}" style="width:100%">
                                     <span class="heart"><i class="fas fa-heart" ></i></span>
                                     <span class="download"><i class="fas fa-download"></i></span>
@@ -95,9 +96,7 @@ $(document).ready(function () {
             loadGiphy($(".active").text(),scrollOffset);
 	    }
     }
-    function downloadLink(){
-        //TODO fix parent
-        
+    function downloadLink(){  
         let parent =$(this).parent();
         downloadLink = parent.attr("data-move");
         console.log(downloadLink);
@@ -120,17 +119,34 @@ $(document).ready(function () {
             window.URL.revokeObjectURL(url);
         })
     }
+
     function addToFav(){
-        //TODO 
+        let parent =$(this).parent();
         let favarr = [];
-        favarr.push(localStorage.getItem("fav"));
-        const thisgif = {
-            // Title$($(this).children()[0]).attr("data")
+        if (localStorage.getItem("fav") !==null){
+            favarr=JSON.parse(localStorage.getItem("fav"));
         }
-        favarr.push();
-        localStorage.setItem("fav",favarr);
-        console.log(localStorage.getItem("fav"));
+        const thisgif = {
+            title:parent.attr("data-title"),
+            rating: parent.attr("data-rating"),
+            images: {
+                fixed_height:{
+                    url:parent.attr("data-still")
+                },
+                fixed_height_still:{
+                    url:parent.attr("data-still")
+                }
+            }
+        }
+
+        //TODO check if this gif is already faverated
+        favarr.push(thisgif);
+        localStorage.setItem("fav",JSON.stringify(favarr));
+
     }
+
+
+    // localStorage.removeItem("fav");
 
     initSideBar();
     $(document).on("click", ".navItem", function(){
