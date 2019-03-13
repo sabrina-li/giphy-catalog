@@ -36,7 +36,6 @@ $(document).ready(function () {
             searchstr = data;
         }else if (searchstr == "favorite"){
             let favarr = localStorage.getItem("fav");
-            // console.log(JSON.parse(favarr));
             showCatalog(JSON.parse(favarr),0);
             return null
         }
@@ -45,7 +44,6 @@ $(document).ready(function () {
             url:baseURL+'&q='+searchstr+"&offset="+scrollOffset,
             method:"GET"
         }).then(function(response){
-            // console.log(baseURL+'&q='+searchstr+"&offset="+scrollOffset);
             showCatalog(response.data,scrollOffset);
         })
     }
@@ -55,7 +53,6 @@ $(document).ready(function () {
         }
         
         arr.forEach(function(gifobj){
-            // console.log(gifobj.images.fixed_height.url);
             let thisGif = $(`<div class="card">
                                 <div class="carddiv" data-move="${gifobj.images.fixed_height.url}" data-still="${gifobj.images.fixed_height_still.url}" data-state="still" data-title="${gifobj.title}" data-rating="${gifobj.rating}">
                                     <img class="gifimg" src="${gifobj.images.fixed_height_still.url}" alt="${gifobj.title}" style="width:100%">
@@ -75,7 +72,6 @@ $(document).ready(function () {
     }
 
     function makeMove(){
-        // let thisCard = $(this).children(":first-child")[0];
         let parent =$(this).parent()
         if (parent.attr("data-state")=="still"){
             $(this).attr("src",parent.attr("data-move"));
@@ -91,7 +87,9 @@ $(document).ready(function () {
         var scrollPosition = $(window).height() + $(window).scrollTop();
         if ((scrollHeight - scrollPosition) / scrollHeight === 0) {
             //at bottom of page
-            //TODO: add botto to go back on top
+            //TODO: add botton to go back on top
+            //dynamically add back to top button on top right coner of the page
+            //when clicked, use jQuery to scroll to top
             let scrollOffset = $("#Catalog").children().length;
             loadGiphy($(".active").text(),scrollOffset);
 	    }
@@ -140,13 +138,16 @@ $(document).ready(function () {
         }
 
         //TODO check if this gif is already faverated
+        //loop through fav array, 
+        //if thisgif.images.fixedheight.url  == favarr...... then don't push, 
+        //else push and break
         favarr.push(thisgif);
         localStorage.setItem("fav",JSON.stringify(favarr));
 
     }
 
 
-    // localStorage.removeItem("fav");
+
 
     initSideBar();
     $(document).on("click", ".navItem", function(){
@@ -167,6 +168,9 @@ $(document).ready(function () {
     $(".fa-bars").on("click",function(){
         $(".sidenav").addClass("sidenavunhide");
         //TODO: add x to exit the nav
+        //add fa dinamically to top right conor of the nav bar
+        //on click listener
+        //display only when sidenavunhide class is added (via css)
     })
     $("main").on("click", function(){$(".sidenav").removeClass("sidenavunhide");});
 
