@@ -93,15 +93,20 @@ input[type=submit]:hover {
   flex: none;
 }
 .carddiv{
-  position: relative;;
+  position: relative;
+  
 }
-.carddiv span{
+.download, .heart{
   font-size: 23px;
   position: absolute;
   bottom:0;
   right: 0;
-  padding: 10px;
+  padding: 5px;
   background-color: white;
+  cursor: pointer;
+}
+.heart{
+  right: 33px;
 }
 .card{
   text-align: center;
@@ -137,11 +142,18 @@ input[type=submit]:hover {
 }
 
 @media screen and (max-width: 640px) {
+  nav{
+    position: fixed; 
+    z-index: 1;
+    width: 50px;
+  }
   nav span{
     display: initial;
     z-index: -1;
+    position: fixed;
   }
   .sidenav{
+    /* height: 100%!important; */
     transform: translateX(-100%);
   }
   .sidenav a {
@@ -149,7 +161,9 @@ input[type=submit]:hover {
     font-size: 18px
   }
   
+
   .sidenavunhide{
+    height: 100%;
     transform: translateX(0);
     -webkit-animation-name: pushnav; /* Safari 4.0 - 8.0 */
     -webkit-animation-duration: 1.5s; /* Safari 4.0 - 8.0 */

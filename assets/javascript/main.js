@@ -1,4 +1,4 @@
-var array = ["running", "cat","dog","asdf","harry potter","cat wearing hat","friday"];
+var array = ["favorite","","running", "cat","dog","asdf","harry potter","cat wearing hat","friday"];
 const apiKey= "jIGF6tck67zDxSHcihSf1h7wfRbCITyb";
 const baseURL="https://api.giphy.com/v1/gifs/search?api_key=iXVZjM3tIa7nDqSSdJVHp3N6Qg4ZhDXA&rating=PG-13&lang=en&limit=10"
 //&q=cat
@@ -16,6 +16,7 @@ $(document).ready(function () {
                             .join(' '));
             $(".sidenav").append(newItem);
         })
+        
     }
     $("#add-item").on("click", function (event) {
         event.preventDefault();
@@ -33,6 +34,10 @@ $(document).ready(function () {
         let searchstr = $(data).attr("data");
         if(typeof data == "string"){
             searchstr = data;
+        }else if (searchstr == "favorite"){
+            let favarr = localStorage.getItem("fav");
+            console.log(favarr);
+            return null
         }
         
         $.ajax({
@@ -40,20 +45,21 @@ $(document).ready(function () {
             method:"GET"
         }).then(function(response){
             // console.log(baseURL+'&q='+searchstr+"&offset="+scrollOffset);
-            showCatalog(response,scrollOffset);
+            showCatalog(response.data,scrollOffset);
         })
     }
-    function showCatalog(response,scrollOffset){
+    function showCatalog(data,scrollOffset){
         if (scrollOffset==0){
             $("#Catalog").empty();
         }
-        const arr = response.data;
+        const arr = data;
         arr.forEach(function(gifobj){
             // console.log(gifobj.images.fixed_height.url);
             let thisGif = $(`<div class="card">
-                                <div class="carddiv">
-                                    <img class="gifimg" src=${gifobj.images.fixed_height_still.url} alt=${gifobj.title} style="width:100%" data-move=${gifobj.images.fixed_height.url}>
-                                    <span><i class="fas fa-download" data="${gifobj.images.fixed_height.url}"></i></span>
+                                <div class="carddiv" data-move="${gifobj.images.fixed_height.url}" data-still="${gifobj.images.fixed_height_still.url}" data-state="still">
+                                    <img class="gifimg" src="${gifobj.images.fixed_height_still.url}" alt="${gifobj.title}" style="width:100%">
+                                    <span class="heart"><i class="fas fa-heart" ></i></span>
+                                    <span class="download"><i class="fas fa-download"></i></span>
                                 </div>
                                 <div>
                                     <h4><b>Title: ${gifobj.title.replace(/GIF+$/, "")}</b> </h4> 
@@ -69,9 +75,15 @@ $(document).ready(function () {
 
     function makeMove(){
         // let thisCard = $(this).children(":first-child")[0];
-        const src = $(this).attr("src");
-        $(this).attr("src",$(this).attr("data-move"));
-        $(this).attr("data-move", src);
+        let parent =$(this).parent()
+        if (parent.attr("data-state")=="still"){
+            $(this).attr("src",parent.attr("data-move"));
+            parent.attr("data-state","move");
+        }else{
+            $(this).attr("src",parent.attr("data-still"));
+            parent.attr("data-state","still");
+        }
+       
     }
     function checkScroll(){
         var scrollHeight = $(document).height();
@@ -84,7 +96,11 @@ $(document).ready(function () {
 	    }
     }
     function downloadLink(){
-        downloadLink = $(this).attr("data");
+        //TODO fix parent
+        
+        let parent =$(this).parent();
+        downloadLink = parent.attr("data-move");
+        console.log(downloadLink);
         $.ajax({
             url:downloadLink,
             method:"GET",
@@ -104,6 +120,17 @@ $(document).ready(function () {
             window.URL.revokeObjectURL(url);
         })
     }
+    function addToFav(){
+        //TODO 
+        let favarr = [];
+        favarr.push(localStorage.getItem("fav"));
+        const thisgif = {
+            // Title$($(this).children()[0]).attr("data")
+        }
+        favarr.push();
+        localStorage.setItem("fav",favarr);
+        console.log(localStorage.getItem("fav"));
+    }
 
     initSideBar();
     $(document).on("click", ".navItem", function(){
@@ -113,14 +140,19 @@ $(document).ready(function () {
         loadGiphy(this);
     });
     $(document).on("click", ".gifimg", makeMove);
+    $(document).on("click",".download",downloadLink);
+    $(document).on("click",".heart",addToFav);
+
+
     $(document).on("scroll",function(){
         checkScroll();
     });
+
     $(".fa-bars").on("click",function(){
         $(".sidenav").addClass("sidenavunhide");
         //TODO: add x to exit the nav
     })
     $("main").on("click", function(){$(".sidenav").removeClass("sidenavunhide");});
 
-    $(document).on("click",".fa-download",downloadLink);
+    
 });
