@@ -13,13 +13,13 @@ function loadGiphy(data,scrollOffset=0){
         url:giphyBaseURL+'&q='+searchstr+"&offset="+scrollOffset,
         method:"GET"
     }).then(function(response){
-        newDiv.showCatalog(response.data,scrollOffset);
+        newDiv.showCatalog(response.data);
         appendtoCatalog(newDiv,scrollOffset);
     })
 }
 
 jQuery.fn.extend({
-    showCatalog:function(arr,scrollOffset){
+    showCatalog:function(arr){
         
         thisDiv = this;
         arr.forEach(function(gifobj){
@@ -44,8 +44,22 @@ jQuery.fn.extend({
 })
     
 function appendtoCatalog(newdiv,scrollOffset){
+    console.log(scrollOffset);
     if (typeof scrollOffset== 'undefined' || scrollOffset == 0){
         $("#catalog").empty();
     }
     $("#catalog").append(newdiv)
+}
+
+
+function checkScroll(){
+    var scrollHeight = $(document).height();
+    var scrollPosition = $(window).height() + $(window).scrollTop();
+    if ((scrollHeight - scrollPosition) / scrollHeight === 0) {//at bottom of page            
+        //TODO: add botton to go back on top
+        //dynamically add back to top button on top right coner of the page
+        //when clicked, use jQuery to scroll to top
+        let scrollOffset = $("#catalog").children().children().length;
+        loadGiphy($(".active").text(),scrollOffset);
+    }
 }
