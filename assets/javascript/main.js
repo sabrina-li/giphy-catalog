@@ -21,7 +21,7 @@ $(document).ready(function () {
     }
 
     function loadGiphy(data,scrollOffset=0){
-        let newDiv = $("<div>")
+        let newDiv = $("<div>").addClass("container");
         let searchstr = $(data).attr("data");
         if(typeof data == "string"){
             searchstr = data;
@@ -36,37 +36,40 @@ $(document).ready(function () {
             method:"GET"
         }).then(function(response){
             newDiv.showCatalog(response.data,scrollOffset);
-            return newDiv;
+            appendtoCatalog(newDiv,scrollOffset);
         })
     }
 
     jQuery.fn.extend({
-    showCatalog:function(arr,scrollOffset){
-        
-        if (scrollOffset==0){
-            $(this).empty();
-        }
-        thisDiv = this;
-        arr.forEach(function(gifobj){
+        showCatalog:function(arr,scrollOffset){
             
-            let thisGif = $(`<div class="card">
-                                <div class="carddiv" data-move="${gifobj.images.fixed_height.url}" data-still="${gifobj.images.fixed_height_still.url}" data-state="still" data-title="${gifobj.title}" data-rating="${gifobj.rating}">
-                                    <img class="gifimg" src="${gifobj.images.fixed_height_still.url}" alt="${gifobj.title}" style="width:100%">
-                                    <span class="heart"><i class="fas fa-heart" ></i></span>
-                                    <span class="download"><i class="fas fa-download"></i></span>
-                                </div>
-                                <div>
-                                    <h4><b>Title: ${gifobj.title.replace(/GIF+$/, "")}</b> </h4> 
-                                    <p>Rating: ${gifobj.rating.toUpperCase()}</p> 
-                                </div>
-                            </div>`);
-            //gifobj.images.fixed_height.url
-            //gifobj.images.fixed_height_still.url
-            thisGif.attr("src",);
-            thisDiv.append(thisGif);
-        });
-    }
+            thisDiv = this;
+            arr.forEach(function(gifobj){
+                
+                let thisGif = $(`<div class="card">
+                                    <div class="carddiv" data-move="${gifobj.images.fixed_height.url}" data-still="${gifobj.images.fixed_height_still.url}" data-state="still" data-title="${gifobj.title}" data-rating="${gifobj.rating}">
+                                        <img class="gifimg" src="${gifobj.images.fixed_height_still.url}" alt="${gifobj.title}" style="width:100%">
+                                        <span class="heart"><i class="fas fa-heart" ></i></span>
+                                        <span class="download"><i class="fas fa-download"></i></span>
+                                    </div>
+                                    <div>
+                                        <h4><b>Title: ${gifobj.title.replace(/GIF+$/, "")}</b> </h4> 
+                                        <p>Rating: ${gifobj.rating.toUpperCase()}</p> 
+                                    </div>
+                                </div>`);
+                //gifobj.images.fixed_height.url
+                //gifobj.images.fixed_height_still.url
+                thisGif.attr("src",);
+                thisDiv.append(thisGif,scrollOffset);
+            });
+        }
     })
+    function appendtoCatalog(newdiv,scrollOffset){
+        if (typeof scrollOffset== 'undefined'){
+            $("#catalog").empty();
+        }
+        $("#catalog").append(newdiv)
+    }
 
     function makeMove(){
         let parent =$(this).parent()
@@ -86,8 +89,8 @@ $(document).ready(function () {
             //TODO: add botton to go back on top
             //dynamically add back to top button on top right coner of the page
             //when clicked, use jQuery to scroll to top
-            let scrollOffset = $("#catalog").children().length;
-            $("#catalog").append(loadGiphy($(".active").text(),scrollOffset));
+            let scrollOffset = $("#catalog").children().children().length;
+            loadGiphy($(".active").text(),scrollOffset);
 	    }
     }
     function downloadLink(){  
@@ -154,7 +157,7 @@ $(document).ready(function () {
             //TODO error handling if val is empty or already added
             array.push(input);
             initSideBar();
-            newGiphyDiv(input);
+            loadGiphy(input);
         }
         $("#user-input").val("");
     });
@@ -164,9 +167,7 @@ $(document).ready(function () {
         $(".navItem").removeClass("active");
         $(this).addClass("active");
         $(".sidenav").removeClass("sidenavunhide");
-        let newdiv = await loadGiphy(this);
-        $("#catalog").append(newdiv);
-        
+        loadGiphy(this);
     });
 
     $(document).on("click", ".gifimg", makeMove);
