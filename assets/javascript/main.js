@@ -1,12 +1,10 @@
-var array = ["my list","","chicken", "spinach","eggs","milk","pizza"];
-const apiKey= "jIGF6tck67zDxSHcihSf1h7wfRbCITyb";
-const giphyBaseURL="https://api.giphy.com/v1/gifs/search?api_key=iXVZjM3tIa7nDqSSdJVHp3N6Qg4ZhDXA&rating=PG-13&lang=en&limit=10"
+var array = ["favorite","","pikachu", "bulbasaur","charmander","squirtle","jigglypuff"];
 //&q=cat
 //&offset=0
 
 
 $(document).ready(function () {
-    function initSideBar() {
+    function initSideBar(active) {
         $(".sidenav").empty()
         array.forEach(function (val) {
             let newItem = $("<a>");
@@ -15,8 +13,11 @@ $(document).ready(function () {
             newItem.text(val.toLowerCase().split(' ')
                             .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
                             .join(' '));
+            if (val == active){newItem.addClass("active");}
             $(".sidenav").append(newItem);
+            
         })
+        
         
     }
 
@@ -85,8 +86,6 @@ $(document).ready(function () {
     }
 
 
-
-
     initSideBar();
 
     $("#add-item").on("click", function (event) {
@@ -96,7 +95,7 @@ $(document).ready(function () {
         if(input!== "" && array.indexOf(input) == -1){
             //TODO error handling if val is empty or already added
             array.push(input);
-            initSideBar();
+            initSideBar(input);
             loadGiphy(input);
         }
         $("#user-input").val("");
@@ -107,7 +106,8 @@ $(document).ready(function () {
         $(".navItem").removeClass("active");
         $(this).addClass("active");
         $(".sidenav").removeClass("sidenavunhide");
-        loadGiphy(this);
+        // loadGiphy(this);
+        loadPokemons(this);
     });
 
     $(document).on("click", ".gifimg", makeMove);

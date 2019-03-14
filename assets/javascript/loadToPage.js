@@ -1,9 +1,13 @@
-function loadGiphy(data,scrollOffset=0){
+const apiKey= "jIGF6tck67zDxSHcihSf1h7wfRbCITyb";
+const giphyBaseURL="https://api.giphy.com/v1/gifs/search?api_key=iXVZjM3tIa7nDqSSdJVHp3N6Qg4ZhDXA&rating=PG-13&lang=en&limit=10"
+
+function loadGiphy(data,scrollOffset=0,targetDiv=$("#catalog")){
     let newDiv = $("<div>").addClass("container");
     let searchstr = $(data).attr("data");
     if(typeof data == "string"){
         searchstr = data;
-    }else if (searchstr == array[0]){
+    }
+    if (searchstr == array[0]){
         let favarr = localStorage.getItem("fav");
         showCatalog(JSON.parse(favarr),0);
         return null
@@ -14,7 +18,7 @@ function loadGiphy(data,scrollOffset=0){
         method:"GET"
     }).then(function(response){
         newDiv.showCatalog(response.data);
-        appendtoCatalog(newDiv,scrollOffset);
+        appendtoCatalog(targetDiv,newDiv,scrollOffset);
     })
 }
 
@@ -43,12 +47,12 @@ jQuery.fn.extend({
     }
 })
     
-function appendtoCatalog(newdiv,scrollOffset){
-    console.log(scrollOffset);
+function appendtoCatalog(targetDiv,newdiv,scrollOffset){
+    //console.log(scrollOffset);
     if (typeof scrollOffset== 'undefined' || scrollOffset == 0){
-        $("#catalog").empty();
+        targetDiv.empty();
     }
-    $("#catalog").append(newdiv)
+    targetDiv.append(newdiv)
 }
 
 
