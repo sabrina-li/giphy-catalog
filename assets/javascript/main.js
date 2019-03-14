@@ -21,6 +21,7 @@ $(document).ready(function () {
     }
 
     function loadGiphy(data,scrollOffset=0){
+        let newDiv = $("<div>")
         let searchstr = $(data).attr("data");
         if(typeof data == "string"){
             searchstr = data;
@@ -34,15 +35,20 @@ $(document).ready(function () {
             url:giphyBaseURL+'&q='+searchstr+"&offset="+scrollOffset,
             method:"GET"
         }).then(function(response){
-            showCatalog(response.data,scrollOffset);
+            newDiv.showCatalog(response.data,scrollOffset);
+            return newDiv;
         })
     }
-    function showCatalog(arr,scrollOffset){
-        if (scrollOffset==0){
-            $("#Catalog").empty();
-        }
+
+    jQuery.fn.extend({
+    showCatalog:function(arr,scrollOffset){
         
+        if (scrollOffset==0){
+            $(this).empty();
+        }
+        thisDiv = this;
         arr.forEach(function(gifobj){
+            
             let thisGif = $(`<div class="card">
                                 <div class="carddiv" data-move="${gifobj.images.fixed_height.url}" data-still="${gifobj.images.fixed_height_still.url}" data-state="still" data-title="${gifobj.title}" data-rating="${gifobj.rating}">
                                     <img class="gifimg" src="${gifobj.images.fixed_height_still.url}" alt="${gifobj.title}" style="width:100%">
@@ -57,9 +63,10 @@ $(document).ready(function () {
             //gifobj.images.fixed_height.url
             //gifobj.images.fixed_height_still.url
             thisGif.attr("src",);
-            $("#Catalog").append(thisGif);
+            thisDiv.append(thisGif);
         });
     }
+    })
 
     function makeMove(){
         let parent =$(this).parent()
@@ -75,13 +82,12 @@ $(document).ready(function () {
     function checkScroll(){
         var scrollHeight = $(document).height();
         var scrollPosition = $(window).height() + $(window).scrollTop();
-        if ((scrollHeight - scrollPosition) / scrollHeight === 0) {
-            //at bottom of page
+        if ((scrollHeight - scrollPosition) / scrollHeight === 0) {//at bottom of page            
             //TODO: add botton to go back on top
             //dynamically add back to top button on top right coner of the page
             //when clicked, use jQuery to scroll to top
-            let scrollOffset = $("#Catalog").children().length;
-            loadGiphy($(".active").text(),scrollOffset);
+            let scrollOffset = $("#catalog").children().length;
+            $("#catalog").append(loadGiphy($(".active").text(),scrollOffset));
 	    }
     }
     function downloadLink(){  
@@ -133,7 +139,6 @@ $(document).ready(function () {
         //else push and break
         favarr.push(thisgif);
         localStorage.setItem("fav",JSON.stringify(favarr));
-
     }
 
 
@@ -146,21 +151,22 @@ $(document).ready(function () {
         event.preventDefault();
         input = $("#user-input").val().trim().toLowerCase();
         if(input!== "" && array.indexOf(input) == -1){
-            //TODO error handling if val is empty
+            //TODO error handling if val is empty or already added
             array.push(input);
             initSideBar();
-            loadGiphy(input);
+            newGiphyDiv(input);
         }
         $("#user-input").val("");
     });
 
 
-    $(document).on("click", ".navItem", function(){
-        $("#recipe").empty();
+    $(document).on("click", ".navItem", async function(){
         $(".navItem").removeClass("active");
         $(this).addClass("active");
         $(".sidenav").removeClass("sidenavunhide");
-        loadGiphy(this);
+        let newdiv = await loadGiphy(this);
+        $("#catalog").append(newdiv);
+        
     });
 
     $(document).on("click", ".gifimg", makeMove);
