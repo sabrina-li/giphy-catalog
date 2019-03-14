@@ -21,17 +21,20 @@
 
 
 <main>
-  <h2>Giphy Catalog</h2>
+  <h2>Gif-rocery list</h2>
   
   <!-- <div class="container" id="addForm">   -->
-    <div class="formDiv">
-      <form>
+    <div class="formDiv" >
+      <form autocomplete="off">
         <label for="user-input">Add anything you want:</label>
+        <div  class="autocomplete">
           <input type="text" id="user-input">
           <input type="submit" value="Add to List" id="add-item"></input> 
+        </div>
       </form>
     </div>
   <!-- </div> -->
+  <div id="recipe"></div>
 
   <div class="container" id="Catalog">
   </div>
@@ -42,5 +45,6 @@
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>
 <script src="assets/javascript/main.js"></script>
+<script src="assets/javascript/search.js"></script>
 </body>
 </html> 

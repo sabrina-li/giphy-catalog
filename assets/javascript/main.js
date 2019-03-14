@@ -1,8 +1,9 @@
-var array = ["favorite","","running", "cat","dog","asdf","harry potter","cat wearing hat","friday"];
+var array = ["my list","","chicken", "spinach","eggs","milk","pizza"];
 const apiKey= "jIGF6tck67zDxSHcihSf1h7wfRbCITyb";
-const baseURL="https://api.giphy.com/v1/gifs/search?api_key=iXVZjM3tIa7nDqSSdJVHp3N6Qg4ZhDXA&rating=PG-13&lang=en&limit=10"
+const giphyBaseURL="https://api.giphy.com/v1/gifs/search?api_key=iXVZjM3tIa7nDqSSdJVHp3N6Qg4ZhDXA&rating=PG-13&lang=en&limit=10"
 //&q=cat
 //&offset=0
+
 
 $(document).ready(function () {
     function initSideBar() {
@@ -18,30 +19,19 @@ $(document).ready(function () {
         })
         
     }
-    $("#add-item").on("click", function (event) {
-        event.preventDefault();
-        input = $("#user-input").val().trim().toLowerCase();
-        if(input!== "" && array.indexOf(input) == -1){
-            //TODO error handling if val is empty
-            array.push(input);
-            initSideBar();
-            loadGiphy(input);
-        }
-        $("#user-input").val("");
-    });
 
     function loadGiphy(data,scrollOffset=0){
         let searchstr = $(data).attr("data");
         if(typeof data == "string"){
             searchstr = data;
-        }else if (searchstr == "favorite"){
+        }else if (searchstr == array[0]){
             let favarr = localStorage.getItem("fav");
             showCatalog(JSON.parse(favarr),0);
             return null
         }
         
         $.ajax({
-            url:baseURL+'&q='+searchstr+"&offset="+scrollOffset,
+            url:giphyBaseURL+'&q='+searchstr+"&offset="+scrollOffset,
             method:"GET"
         }).then(function(response){
             showCatalog(response.data,scrollOffset);
@@ -150,12 +140,29 @@ $(document).ready(function () {
 
 
     initSideBar();
+
+    $("#add-item").on("click", function (event) {
+        //TODO: check for illegal charactors
+        event.preventDefault();
+        input = $("#user-input").val().trim().toLowerCase();
+        if(input!== "" && array.indexOf(input) == -1){
+            //TODO error handling if val is empty
+            array.push(input);
+            initSideBar();
+            loadGiphy(input);
+        }
+        $("#user-input").val("");
+    });
+
+
     $(document).on("click", ".navItem", function(){
+        $("#recipe").empty();
         $(".navItem").removeClass("active");
         $(this).addClass("active");
         $(".sidenav").removeClass("sidenavunhide");
         loadGiphy(this);
     });
+
     $(document).on("click", ".gifimg", makeMove);
     $(document).on("click",".download",downloadLink);
     $(document).on("click",".heart",addToFav);
