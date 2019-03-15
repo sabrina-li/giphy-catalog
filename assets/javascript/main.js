@@ -16,7 +16,6 @@ $(document).ready(function () {
         
     }
 
-
     function makeMove(){
         let parent =$(this).parent()
         if (parent.attr("data-state")=="still"){
@@ -86,6 +85,7 @@ $(document).ready(function () {
     $("#add-item").on("click", function (event) {
         //TODO: check for illegal charactors
         event.preventDefault();
+        $("#catalog").empty();
         input = $("#user-input").val().trim().toLowerCase();
         if(input!== "" && array.indexOf(input) == -1){
             //TODO error handling if val is empty or already added
@@ -98,6 +98,7 @@ $(document).ready(function () {
 
 
     $(document).on("click", ".navItem", async function(){
+        $("#catalog").empty();
         $(".navItem").removeClass("active");
         $(this).addClass("active");
         $(".sidenav").removeClass("sidenavunhide");
@@ -111,7 +112,21 @@ $(document).ready(function () {
 
 
     $(document).on("scroll",function(){
-        checkScroll();
+        var scrollHeight = $(document).height();
+        var scrollPosition = $(window).height() + $(window).scrollTop();
+        if ((scrollHeight - scrollPosition) / scrollHeight === 0) {//at bottom of page            
+            //TODO: add botton to go back on top
+            //dynamically add back to top button on top right coner of the page
+            //when clicked, use jQuery to scroll to top
+            
+            let loadMoreDiv = $("#catalog").children(".active");
+            let scrollOffset = loadMoreDiv.children(".container").children().length;
+           
+            loadGiphy(loadMoreDiv.attr("id"),scrollOffset).then(function(d){
+                loadMoreDiv.children(".container").append(d[1].children());
+            });
+        }
+
     });
 
     $(".fa-bars").on("click",function(){
@@ -126,6 +141,7 @@ $(document).ready(function () {
 
     $(document).on("click",".collapsible",function(){
         $(this).toggleClass("active");
+        $(this).parent().toggleClass("active");
         var content = $(this).next();
         if (content.css("display") === "flex") {
         content.css("display","none");
