@@ -1,10 +1,20 @@
 
+// localStorage.removeItem("fav");
 
-function loadPokemons( data){
+function loadPokemons(data){
+
     //TODO:add loading wheel
     let searchstr = $(data).attr("data");//onclick
     if(typeof data == "string"){//calling via string
         searchstr = data;
+    }
+    if (searchstr == array[0]){
+        let favarr = localStorage.getItem("fav");
+        loadGiphy(searchstr).then(function(d){
+            $("#catalog").append(d);
+            return null
+        });
+        
     }
 
     $.ajax({

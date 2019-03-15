@@ -91,7 +91,7 @@ $(document).ready(function () {
             //TODO error handling if val is empty or already added
             array.push(input);
             initSideBar(input);
-            loadGiphy(input);
+            // loadGiphy(input);
         }
         $("#user-input").val("");
     });

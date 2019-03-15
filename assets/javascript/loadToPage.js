@@ -5,14 +5,14 @@
 var loadGiphy = function (data,scrollOffset=0){
     return new Promise(function(resolve,reject){
         let newDiv = $("<div>").addClass("container");
-        let searchstr = $(data).attr("data");
+        let searchstr = $(data).attr("data");//onclick
         if(typeof data == "string"){
             searchstr = data;
         }
         if (searchstr == array[0]){
             let favarr = localStorage.getItem("fav");
-            showCatalog(JSON.parse(favarr),0);
-            return null
+            newDiv.showCatalog(JSON.parse(favarr),0);
+            resolve([searchstr,newDiv]);
         }
         
         $.ajax({
@@ -21,7 +21,7 @@ var loadGiphy = function (data,scrollOffset=0){
         }).done(function(response){
             newDiv.showCatalog(response.data);
             // appendtoCatalog(targetDiv,newDiv,scrollOffset);
-            resolve([data,newDiv]);
+            resolve([searchstr,newDiv]);
         }).fail(function(e){
             reject("loadGiphy fialed with error: "+e);
         })
