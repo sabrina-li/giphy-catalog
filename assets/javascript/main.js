@@ -1,8 +1,3 @@
-var array = ["favorite","","pikachu", "bulbasaur","charmander","squirtle","jigglypuff"];
-//&q=cat
-//&offset=0
-
-
 $(document).ready(function () {
     function initSideBar(active) {
         $(".sidenav").empty()
@@ -128,5 +123,15 @@ $(document).ready(function () {
     })
     $("main").on("click", function(){$(".sidenav").removeClass("sidenavunhide");});
 
+
+    $(document).on("click",".collapsible",function(){
+        $(this).toggleClass("active");
+        var content = $(this).next();
+        if (content.css("display") === "flex") {
+        content.css("display","none");
+        } else {
+        content.css("display","flex");
+        }
+    });
     
 });

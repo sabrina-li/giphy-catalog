@@ -1,33 +1,37 @@
-const apiKey= "jIGF6tck67zDxSHcihSf1h7wfRbCITyb";
-const giphyBaseURL="https://api.giphy.com/v1/gifs/search?api_key=iXVZjM3tIa7nDqSSdJVHp3N6Qg4ZhDXA&rating=PG-13&lang=en&limit=10"
 
-function loadGiphy(data,scrollOffset=0,targetDiv=$("#catalog")){
-    let newDiv = $("<div>").addClass("container");
-    let searchstr = $(data).attr("data");
-    if(typeof data == "string"){
-        searchstr = data;
-    }
-    if (searchstr == array[0]){
-        let favarr = localStorage.getItem("fav");
-        showCatalog(JSON.parse(favarr),0);
-        return null
-    }
-    
-    $.ajax({
-        url:giphyBaseURL+'&q='+searchstr+"&offset="+scrollOffset,
-        method:"GET"
-    }).then(function(response){
-        newDiv.showCatalog(response.data);
-        appendtoCatalog(targetDiv,newDiv,scrollOffset);
-    })
+//load giphy takes input string or jquery obj with data attribute
+//load giphies
+//return a promise to load a div containing all gifs
+var loadGiphy = function (data,scrollOffset=0){
+    return new Promise(function(resolve,reject){
+        let newDiv = $("<div>").addClass("container");
+        let searchstr = $(data).attr("data");
+        if(typeof data == "string"){
+            searchstr = data;
+        }
+        if (searchstr == array[0]){
+            let favarr = localStorage.getItem("fav");
+            showCatalog(JSON.parse(favarr),0);
+            return null
+        }
+        
+        $.ajax({
+            url:giphyBaseURL+'&q='+searchstr+"&offset="+scrollOffset,
+            method:"GET"
+        }).done(function(response){
+            newDiv.showCatalog(response.data);
+            // appendtoCatalog(targetDiv,newDiv,scrollOffset);
+            resolve([data,newDiv]);
+        }).fail(function(e){
+            reject("loadGiphy fialed with error: "+e);
+        })
+    });
 }
 
 jQuery.fn.extend({
     showCatalog:function(arr){
-        
         thisDiv = this;
         arr.forEach(function(gifobj){
-            
             let thisGif = $(`<div class="card">
                                 <div class="carddiv" data-move="${gifobj.images.fixed_height.url}" data-still="${gifobj.images.fixed_height_still.url}" data-state="still" data-title="${gifobj.title}" data-rating="${gifobj.rating}">
                                     <img class="gifimg" src="${gifobj.images.fixed_height_still.url}" alt="${gifobj.title}" style="width:100%">
