@@ -2,7 +2,7 @@
 
 ## This application is dedicated to those who has a dream to catch 'em all!
 
-The catalog is preloaded with my favorite pokemon, but you can add 'em all!
+The catalog is preloaded with my favorite pokemon, but you can add 'em all! Hosted here: https://sabrina-li.github.io/giphy-catalog/
 
 * When you click on the pokemon on the list displayed on the left, it loads the evolution chain of the pokemon in collapsible sections. 
 
