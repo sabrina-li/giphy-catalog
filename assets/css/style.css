@@ -176,9 +176,9 @@ input[type=submit]:hover {
 .spin{
   /* transform:rotate(90deg); */
   -webkit-animation-name: spin; /* Safari 4.0 - 8.0 */
-  -webkit-animation-duration: 1.5s; /* Safari 4.0 - 8.0 */
+  -webkit-animation-duration: 0.5s; /* Safari 4.0 - 8.0 */
   animation-name: spin; 
-  animation-duration:  1.5s;
+  animation-duration:  0.5s;
   transform:rotate(0deg)
 }
 
