@@ -92,6 +92,7 @@ $(document).ready(function () {
             array.push(input);
             initSideBar(input);
             // loadGiphy(input);
+            loadPokemons(input);
         }
         $("#user-input").val("");
     });
@@ -140,9 +141,8 @@ $(document).ready(function () {
 
 
     $(document).on("click",".collapsible",function(){
-
         $(this).toggleClass("active");
-        // $(this).parent().toggleClass("active");
+        $(this).parent().toggleClass("active");
         $(this).children(".fa-caret-down").toggleClass("spin");
         var content = $(this).next();
         if (content.css("display") === "flex") {

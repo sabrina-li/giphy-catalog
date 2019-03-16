@@ -16,7 +16,8 @@ function loadPokemons(data){
         $.ajax({
         url:pokeBaseURL+searchstr,
         method:"GET",
-        success:loadSpecies
+        success:loadSpecies,
+        error:showError
     })}
 
 
@@ -27,7 +28,8 @@ function loadSpecies(r){
     $.ajax({
         url:evoURL,
         method:"GET",
-        success:loadEvolution
+        success:loadEvolution,
+        error:showError
     })
 }
 
@@ -54,4 +56,10 @@ function loadEvolution(r){
     
 
 }
+
+function showError(e){
+    console.error(e.status,e.responseText);
+    $("#catalog").append("Error loading Pokemon, make sure your pokemon exist and try again later!");
+}
+
 //loadPokemons("pikachu")
