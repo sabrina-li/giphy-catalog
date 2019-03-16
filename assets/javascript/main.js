@@ -63,7 +63,7 @@ $(document).ready(function () {
             rating: parent.attr("data-rating"),
             images: {
                 fixed_height:{
-                    url:parent.attr("data-still")
+                    url:parent.attr("data-move")
                 },
                 fixed_height_still:{
                     url:parent.attr("data-still")
@@ -88,11 +88,13 @@ $(document).ready(function () {
         $("#catalog").empty();
         input = $("#user-input").val().trim().toLowerCase();
         if(input!== "" && array.indexOf(input) == -1){
-            //TODO error handling if val is empty or already added
-            array.push(input);
-            initSideBar(input);
+            loadPokemons(input).then(function(e){
+                console.log("eeeee",e);
+                array.push(input);
+                initSideBar(input);
+            })
+            
             // loadGiphy(input);
-            loadPokemons(input);
         }
         $("#user-input").val("");
     });

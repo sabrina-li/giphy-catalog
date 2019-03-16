@@ -50,7 +50,6 @@ jQuery.fn.extend({
                                 </div>`);
                 //gifobj.images.fixed_height.url
                 //gifobj.images.fixed_height_still.url
-                // thisGif.attr("src");
                 thisDiv.append(thisGif);
             });
         }
@@ -58,11 +57,3 @@ jQuery.fn.extend({
     }
 })
     
-// function appendtoCatalog(targetDiv,newdiv,scrollOffset){
-//     //console.log(scrollOffset);
-//     if (typeof scrollOffset== 'undefined' || scrollOffset == 0){
-//         targetDiv.empty();
-//     }
-//     targetDiv.append(newdiv)
-// }
-
