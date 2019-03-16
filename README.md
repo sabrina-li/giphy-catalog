@@ -25,7 +25,7 @@ The catalog is preloaded with my favorite pokemon, but you can add 'em all!
 
 * You can add any gif to favorites section by clicking the heart iton. The favorite session is persisted on your device independent of brower sessions
 
-## tributes
+## Tributes
 
 [Giphy API](https://giphy.com)
 
