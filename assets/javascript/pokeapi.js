@@ -9,19 +9,17 @@ function loadPokemons(data){
         searchstr = data;
     }
     if (searchstr == array[0]){
-        let favarr = localStorage.getItem("fav");
         loadGiphy(searchstr).then(function(d){
-            $("#catalog").append(d);
-            return null
+            $("#catalog").append(d[1]);
         });
-        
-    }
-
-    $.ajax({
+    }else{    
+        $.ajax({
         url:pokeBaseURL+searchstr,
         method:"GET",
         success:loadSpecies
-    })
+    })}
+
+
 }
 
 function loadSpecies(r){
