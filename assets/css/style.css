@@ -170,6 +170,20 @@ input[type=submit]:hover {
   background-color: #f1f1f1;
 }
 
+.fa-caret-down{
+  transform:rotate(270deg)
+}
+.spin{
+  /* transform:rotate(90deg); */
+  -webkit-animation-name: spin; /* Safari 4.0 - 8.0 */
+  -webkit-animation-duration: 1.5s; /* Safari 4.0 - 8.0 */
+  animation-name: spin; 
+  animation-duration:  1.5s;
+  transform:rotate(0deg)
+}
+
+
+
 
 
 @media screen and (max-height: 450px) {
@@ -261,13 +275,13 @@ input[type=submit]:hover {
   }
 
 }
-/* 
-@keyframes pushmain {
+
+@keyframes spin {
   from {
-    transform: translate(0%, 0);
+    transform:rotate(-90deg)
   }
   to {
-    transform: translate(60px, 0);
+    transform:rotate(0deg)
   }
 
-} */
+}

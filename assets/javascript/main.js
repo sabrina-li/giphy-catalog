@@ -142,6 +142,8 @@ $(document).ready(function () {
     $(document).on("click",".collapsible",function(){
         $(this).toggleClass("active");
         $(this).parent().toggleClass("active");
+        var t = $(this).children(".fa-caret-down");
+        t.addClass("spin");
         var content = $(this).next();
         if (content.css("display") === "flex") {
         content.css("display","none");
