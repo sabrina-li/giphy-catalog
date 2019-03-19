@@ -72,12 +72,13 @@ $(document).ready(function () {
             }
         }
 
-        //TODO check if this gif is already faverated
-        //loop through fav array, 
-        //if thisgif.images.fixedheight.url  == favarr...... then don't push, 
-        //else push and break
-        favarr.push(thisgif);
-        localStorage.setItem("fav",JSON.stringify(favarr));
+        if (favorited(thisgif.images.fixed_height.url)){
+            //do nothing
+        }else{
+            favarr.push(thisgif);
+            localStorage.setItem("fav",JSON.stringify(favarr));
+        }
+        
     }
 
 

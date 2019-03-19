@@ -48,19 +48,12 @@ jQuery.fn.extend({
                                         <p>Rating: ${gifobj.rating.toUpperCase()}</p> 
                                     </div>
                                 </div>`);
-                if (localStorage.getItem("fav") !== null ){
-                    
-                    favarr=JSON.parse(localStorage.getItem("fav"));
-                    favarr.forEach(function(val){
-                        console.log(val);
-                        if(val.images.fixed_height.url == gifobj.images.fixed_height.url){
-                            $(thisGif.children()[0]).children(".heart").css("color","red");
-                            return;
-                        }
-                    })}
                 
-                    
-                  
+                console.log("gifobj",gifobj.images.fixed_height.url)
+                if (favorited(gifobj.images.fixed_height.url)){
+                    $(thisGif.children()[0]).children(".heart").css("color","red");
+                }
+                                
                 //gifobj.images.fixed_height.url
                 //gifobj.images.fixed_height_still.url
                 thisDiv.append(thisGif);
@@ -69,4 +62,18 @@ jQuery.fn.extend({
         
     }
 })
-    
+
+function favorited(url){
+    let faved = false;
+    if (localStorage.getItem("fav") !== null ){
+        favarr=JSON.parse(localStorage.getItem("fav"));
+        favarr.forEach(function(val){
+            console.log(val.images.fixed_height.url);
+            if(val.images.fixed_height.url == url){
+                console.log(true);
+                faved = true;
+            }
+        })
+    }
+    return faved;
+}
