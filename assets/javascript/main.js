@@ -53,6 +53,7 @@ $(document).ready(function () {
     }
 
     function addToFav(){
+        $(this).css("color","red");
         let parent =$(this).parent();
         let favarr = [];
         if (localStorage.getItem("fav") !==null){

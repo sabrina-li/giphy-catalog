@@ -48,6 +48,19 @@ jQuery.fn.extend({
                                         <p>Rating: ${gifobj.rating.toUpperCase()}</p> 
                                     </div>
                                 </div>`);
+                if (localStorage.getItem("fav") !== null ){
+                    
+                    favarr=JSON.parse(localStorage.getItem("fav"));
+                    favarr.forEach(function(val){
+                        console.log(val);
+                        if(val.images.fixed_height.url == gifobj.images.fixed_height.url){
+                            $(thisGif.children()[0]).children(".heart").css("color","red");
+                            return;
+                        }
+                    })}
+                
+                    
+                  
                 //gifobj.images.fixed_height.url
                 //gifobj.images.fixed_height_still.url
                 thisDiv.append(thisGif);
