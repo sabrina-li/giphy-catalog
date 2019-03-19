@@ -43,7 +43,7 @@ var loadPokemons = function (data) {
                 $("#catalog").append(newDiv)
                 loadGiphy(val, 0).then(function (d) {
                     $('#' + d[0]).append(`<h4 class="collapsible"><i class="fas fa-caret-down"></i>     <b>Level ${idx}: ${d[0]}</b></h4> `);
-                    console.log(d[1]);
+                    // console.log(d[1]);
                     d[1].addClass("content");
                     $('#' + d[0]).append(d[1]);
                     //arrange div in order

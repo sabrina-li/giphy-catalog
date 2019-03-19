@@ -31,7 +31,7 @@ $(document).ready(function () {
     function downloadLink(){  
         let parent =$(this).parent();
         downloadLink = parent.attr("data-move");
-        console.log(downloadLink);
+        // console.log(downloadLink);
         $.ajax({
             url:downloadLink,
             method:"GET",
@@ -62,6 +62,7 @@ $(document).ready(function () {
         const thisgif = {
             title:parent.attr("data-title"),
             rating: parent.attr("data-rating"),
+            id:parent.attr("id"),
             images: {
                 fixed_height:{
                     url:parent.attr("data-move")
@@ -74,6 +75,7 @@ $(document).ready(function () {
 
         if (favorited(thisgif.images.fixed_height.url)){
             //do nothing
+            console.log("not adding")
         }else{
             favarr.push(thisgif);
             localStorage.setItem("fav",JSON.stringify(favarr));
@@ -91,7 +93,7 @@ $(document).ready(function () {
         input = $("#user-input").val().trim().toLowerCase();
         if(input!== "" && array.indexOf(input) == -1){
             loadPokemons(input).then(function(e){
-                console.log("eeeee",e);
+                // console.log("eeeee",e);
                 array.push(input);
                 initSideBar(input);
             })

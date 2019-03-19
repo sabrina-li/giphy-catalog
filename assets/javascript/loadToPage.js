@@ -18,6 +18,7 @@ var loadGiphy = function (data,scrollOffset=0){
                 url:giphyBaseURL+'&q='+searchstr+"&offset="+scrollOffset,
                 method:"GET"
             }).done(function(response){
+                
                 newDiv.showCatalog(response.data);
                 // appendtoCatalog(targetDiv,newDiv,scrollOffset);
                 resolve([searchstr,newDiv]);
@@ -38,7 +39,7 @@ jQuery.fn.extend({
         }else{
             arr.forEach(function(gifobj){
                 let thisGif = $(`<div class="card">
-                                    <div class="carddiv" data-move="${gifobj.images.fixed_height.url}" data-still="${gifobj.images.fixed_height_still.url}" data-state="still" data-title="${gifobj.title}" data-rating="${gifobj.rating}">
+                                    <div class="carddiv" id="${gifobj.id}" data-move="${gifobj.images.fixed_height.url}" data-still="${gifobj.images.fixed_height_still.url}" data-state="still" data-title="${gifobj.title}" data-rating="${gifobj.rating}">
                                         <img class="gifimg" src="${gifobj.images.fixed_height_still.url}" alt="${gifobj.title}" style="width:100%">
                                         <span class="heart"><i class="fas fa-heart" ></i></span>
                                         <span class="download"><i class="fas fa-download"></i></span>
@@ -49,8 +50,10 @@ jQuery.fn.extend({
                                     </div>
                                 </div>`);
                 
-                console.log("gifobj",gifobj.images.fixed_height.url)
-                if (favorited(gifobj.images.fixed_height.url)){
+                // console.log("gifobj",gifobj.images.fixed_height.url)
+                
+                if (favorited(gifobj.id)){
+                    // console.log("faved");
                     $(thisGif.children()[0]).children(".heart").css("color","red");
                 }
                                 
@@ -63,17 +66,19 @@ jQuery.fn.extend({
     }
 })
 
-function favorited(url){
+function favorited(id){
+    // console.log(url);
     let faved = false;
     if (localStorage.getItem("fav") !== null ){
         favarr=JSON.parse(localStorage.getItem("fav"));
         favarr.forEach(function(val){
-            console.log(val.images.fixed_height.url);
-            if(val.images.fixed_height.url == url){
-                console.log(true);
+            // console.log(val.images.fixed_height.url);
+            if(val.id == id){
+                // console.log(true);
                 faved = true;
             }
         })
     }
+    console.log(faved);
     return faved;
 }
