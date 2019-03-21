@@ -46,7 +46,7 @@ $(document).ready(function () {
             //mobile support: https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL
             var a = document.createElement('a');
             a.href = url
-            a.download = '';
+            a.download = 'dwonload.gif';
             a.click();
             window.URL.revokeObjectURL(url);
         })
